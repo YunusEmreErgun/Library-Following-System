@@ -1,0 +1,53 @@
+﻿@model List<BookModel>
+@{
+    ViewData["Title"] = "Kitap Düzenle";
+}
+
+<div class="row">
+    <div class="col-14">
+        <h1 class="display-4 border-bottom text-center pb-2">@ViewData["Title"]</h1>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col text-white">
+        <table class="table table-striped">
+            <thead>
+                <tr class="text-white">
+                    <th scope="col">Kitap Kapağı</th>
+                    <th scope="col">Kitap Adı</th>
+                    <th scope="col">Yazarı</th>
+                    <th scope="col">Türü</th>
+                    <th scope="col">Yayım Tarihi</th>
+                    @*<th scope="col">Özet</th>*@
+                    <th scope="col">Stok</th>
+                    <th scope="col">Düzenle</th>
+                    <th scope="col">Sil</th>
+                </tr>
+            </thead>
+            
+            <tbody>
+                @foreach(BookModel book in Model)
+                {
+                    <tr class="text-white">
+                        <td><img width="128px" src=~/uploads/@book.BookImageFileName/></td>
+                        <td>@book.BookName</td>
+                        <td>@book.Author</td>
+                        <td>@book.BookType</td>
+                        <td>@book.PublishingDate</td>
+                        @*<td height="200px"><textarea class="text-box" style="height:200px;" row="3" >@book.BookSubject</textarea></td>   *@                     
+                        <td>@book.Stock</td>
+                        <td>
+                            <a asp-action="EditBook" asp-route-id="@book.BookId" class="btn btn-info btn-sm text-white"><i class="fa fa-edit me-2"></i>Edit</a>
+                        </td>
+                        <td>
+                            <a asp-action="DeleteBook" asp-route-id="@book.BookId"
+                                 onclick="return confirm('Bu kitabı silmek istediğinizden emin misiniz? : @book.BookName ?')"
+                                 class="btn btn-danger btn-sm"><i class="fa fa-trash me-2"></i>Remove</a>
+                        </td>
+                    </tr>                
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

@@ -1,0 +1,48 @@
+﻿@model List<BookModel>
+@{
+    ViewData["Title"] = "Kitap Detayları";
+}
+
+
+    <div class="row">
+        <div class="col">
+            <h1 class="display-4 border-bottom text-center pb-2">@ViewData["Title"]</h1>
+        </div>
+    </div>
+
+    <div class="col">
+        <div>
+            <h2>Kitap Bilgileri</h2>
+            <hr />
+        </div>
+    </div>
+
+<div class="row">
+    <div class="col">
+        <table class="table table-striped">
+            <thead>
+                <tr class="text-white">
+                    <th scope="col">Kitap Kapağı</th>
+                    <th scope="col">Kitap Adı</th>
+                    <th scope="col">Yazarı</th>
+                    <th scope="col">Detay</th>
+                   
+                </tr>
+            </thead>
+
+            <tbody>
+                @foreach (BookModel book in Model)
+                {
+                    <tr class="text-white">
+                        <td><img width="128px" src=~/uploads/@book.BookImageFileName /></td>
+                        <td>@book.BookName</td>
+                        <td>@book.Author</td>
+                        <td>
+                            <a asp-action="BookDetails" asp-route-id="@book.BookId" class="btn btn-info btn-sm text-white"><i class="fa fa-edit me-2"></i>Detay</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

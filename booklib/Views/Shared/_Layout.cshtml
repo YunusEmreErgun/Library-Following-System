@@ -1,0 +1,130 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - booklib</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link href="~/lib/font-awesome/css/all.min.css" rel="stylesheet" />
+    <link href="~/toastrjs/toastr.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/booklib.styles.css" asp-append-version="true" />
+    
+    <script src="~/lib/jqueryajax/jquery-3.6.0.js"></script>
+</head>
+<body class="bg-dark">
+
+    @*Header*@
+    <header>
+        <nav class="navbar navbar-dark bg-dark navbar-expand-lg text-white">
+
+            <div class="container py-2">
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index"><img src="~/img/Logo.png" width="200" height="70" alt="KütüpHanem" /></a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <div class="collapse navbar-collapse d-sm-inline-flex justify-content-between" id=".navbar-collapse">
+                    <ul class="navbar-nav flex-grow-1">
+                        <li class="nav-item">
+                            <a class="nav-link text-white" asp-action="" asp-controller="Home" asp-action="Index"><i class="fa-solid fa-right-to-bracket me-2"></i>Anasayfa</a>
+                        </li>
+                        @if (User.Identity.IsAuthenticated)
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-white" asp-area="" asp-controller="Home" asp-action="DetailsList">Kitap Detayları</a>
+                            </li>
+                        }
+
+                        <li class="nav-item">
+                            <a class="nav-link text-white" asp-area="" asp-controller="Home" asp-action="Privacy">Hakkımızda</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-white" asp-area="" asp-controller="Home" asp-action="Privacy">İletişim</a>
+                        </li>
+                        @if (User.Identity.IsAuthenticated)
+                        {
+                            if (User.IsInRole("moderator"))
+                            {
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle" asp-action="Index" asp-controller="Moderator" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                        Moderator
+                                    </a>
+                                    <ul class="dropdown-menu">
+                                        <li><a asp-action="Index" asp-controller="Moderator" class="dropdown-item">Kitap Ekle</a></li>
+                                        <li><a asp-action="BookList" asp-controller="Moderator" class="dropdown-item">Kitap Düzenle - Sil</a></li>
+                                    </ul>
+                                </li>
+                            }
+                            <li class="nav-item ms-auto">
+                                <a class="nav-link text-white" asp-area="" asp-controller="Account" asp-action="ListBook"><i class="fa-solid fa-book me-2"></i>Kitaplarım</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-white" asp-area="" asp-controller="Account" asp-action="Profile">
+                                    <i class="fa-solid fa-user me-2"></i>@User.FindFirst("UserName").Value
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-white" asp-area="" asp-controller="Account" asp-action="Logout"><i class="fa-solid fa-right-from-bracket me-2"></i>Çıkış</a>
+                            </li>
+
+                        }
+                        else
+                        {
+                            <li class="nav-item ms-auto">
+                                <a class="nav-link text-white" asp-area="" asp-controller="Account" asp-action="Login"><i class="fa-solid fa-right-to-bracket me-2"></i>Giriş Yap</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-white" asp-area="" asp-controller="Account" asp-action="Register"><i class="fa-solid fa-user me-2"></i>Kayıt Ol</a>
+                            </li>
+                        }
+
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    @*RenderBody*@
+    <div class="container text-white">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+
+    @*Footer*@
+    <footer class="bg-dark py-5">
+        <div class="container text-black">
+            <div class="row">
+                <div class="col-md-2">
+                    <img src="~/img/Logo.png" width="200" height="70" alt="KütüpHanem" />
+                </div>
+                <div class="col-md-2">
+                    <a class="text-white" asp-area="" asp-controller="Home" asp-action="Privacy">Gizlilik</a>
+                </div>
+                <div class="col-md-2">
+                    <a class="text-white" asp-area="" asp-controller="Home" asp-action="Privacy">Hakkımızda</a>
+                </div>
+                <div class="col-md-2">
+                    <a class="text-white" asp-area="" asp-controller="Home" asp-action="Privacy">İletişim</a>
+                </div>
+                <div class="col-md-4 text-right text-white">
+                    <a href="http://facebook.com"><i class="fa-brands fa-facebook fa-2x mx-3"></i></a>
+                    <a href="http://instagram.com"><i class="fa-brands fa-instagram fa-2x mx-3"></i></a>
+                    <a href="http://youtube.com"><i class="fa-brands fa-youtube fa-2x mx-3"></i></a>
+                    <a href="http://twitter.com"><i class="fa-brands fa-twitter fa-2x mx-3"></i></a>
+                </div>
+                <div class="clearfix"></div>
+                <p class="mt-5 ml-auto text-white"><small>2023 KütüpHanem / Tüm hakları saklıdır.</small></p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="~/toastrjs/toastr.min.js"></script>
+
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

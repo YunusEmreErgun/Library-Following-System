@@ -1,0 +1,104 @@
+﻿@model List<BookSearchModel>
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="text-center col-8 offset-2">
+    <h1 class="display-4">Hoşgeldiniz...</h1>
+    <p>Çevrimiçi Kütüphanemizi Kullanarak Aradığınız Kitaplara Kolayca Ulaşabilirsiniz.</p>
+</div>
+<hr />
+
+@if (User.Identity.IsAuthenticated)
+{
+    <div class="row">
+        <form asp-action="Index" method="get">
+            <div class="col text-center">
+                <p>İstediğiniz kitapları aratabilir ve müsaitlik durumuna göre kitaba sahip olabilirsiniz</p>
+                <input class="form-control me-2" type="text" name="SearchString" value="" />
+                
+                <input type="submit" value="Search" id="Search1" class="btn btn-primary mt-3" />
+            </div>
+        </form>
+        <div class="col">
+            <table class="table table-striped">
+                <thead>
+                    <tr class="text-white">
+                        <th>Kitap Kapağı</th>
+                        <th>Kitap Adı</th>
+                        <th>Yazar</th>
+                        <th>İşlemler</th>
+                    </tr>
+
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr class="text-white">
+                            <td><img width="128px" src=~/uploads/@item.BookImageFileName /></td>
+                            <td>@item.BookName</td>
+                            <td>@item.Author</td>
+                            <td>
+                                <a asp-action="BookDetails" asp-route-id="@item.BookId" class="btn btn-info btn-sm text-white"><i class="fa fa-edit me-2"></i>Detay</a>
+                                <a asp-action="BorrowBook" asp-route-id="@item.BookId" class="btn btn-success btn-sm text-white"><i class="fa-solid fa-book me-2 fa-2x"></i>Ödünç Al</a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+}
+
+    <hr />
+
+    <div class="text-center col-8 offset-2" style="margin-top:10rem">
+
+
+        <div id="carouselExampleCaptions" class="carousel slide" style="margin-bottom: 100px;">
+            <div class="carousel-indicators">
+                <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+                <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="1" aria-label="Slide 2"></button>
+                <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="2" aria-label="Slide 3"></button>
+            </div>
+            <div class="carousel-inner">
+                <div class="carousel-item active text-dark">
+                    <a href="home/privacy">
+                        <img src="~/img/Kitaplık1.jpg" class="d-block w-100" alt="KütüpHanem Nedir?" style="height:450px">
+                    </a>
+                    <div class="carousel-caption d-none d-md-block text-white">
+                        <h5><b>KütüpHanem Nedir?</b></h5>
+                        <p>Some representative placeholder content for the first slide.</p>
+                    </div>
+                </div>
+                <div class="carousel-item">
+                    <a href="https://ramikutuphanesi.gov.tr/">
+                        <img src="~/img/RamiKütüpHanesi.jpg" class="d-block w-100" alt="Rami Kütüphanesi Açıldı..." style="height:450px">
+                    </a>
+                    <div class="carousel-caption d-none d-md-block">
+                        <h5><b>Rami Kütüphanesi Açıldı.</b></h5>
+                        <p>Some representative placeholder content for the first slide.</p>
+                    </div>
+                </div>
+                <div class="carousel-item">
+                    <a href="https://www.storytel.com/">
+                        <img src="~/img/storytel.jpg" class="d-block w-100" alt="Sesli Kitaplık: StoryTel" style="height:450px">
+                    </a>
+                    <div class="carousel-caption d-none d-md-block">
+                        <h5><b>Sesli Kütüphane : StoryTel</b></h5>
+                        <p>Some representative placeholder content for the first slide.</p>
+                    </div>
+                </div>
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+            </button>
+        </div>
+    </div>
+
+
